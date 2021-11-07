@@ -1,0 +1,6 @@
+.bg-dark{
+    background-image: var(--bs-gradient);
+    box-shadow: 0 4px 16px #ccc;
+    border-radius: 5px;
+    height: 100%;
+}

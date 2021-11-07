@@ -1,56 +1,51 @@
 
 import './App.css';
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Form} from "./components/Form";
+import {MessageList} from "./components/MessageList";
+import {Authors} from "./utils/variable";
+import uuid from 'uuid/dist/v4';
+import {ListChat} from "./components/ListChat"
 
 const text=[
-    {text:'', author:''}
+    {id:uuid(),text:'', author:''}
 ];
 
 function App() {
     const [messageList,setMessageList]=useState(text);
 
     useEffect(()=>{
-      setTimeout(()=>{
-return setMessageList(messageList.map(item=>{
-    if(item.author==='user'){
-   return {
-       text: 'How are you?',
-       author: 'robot'
-   }
-    }else{
-        return{
-            text:'',
-            author: ''
+        if(messageList.length && messageList[messageList.length-1].author !== Authors.robot){
+          const timeout= setTimeout(()=> handlerSendText({
+                text:'How are you?',
+                author:Authors.robot,
+                id: uuid()
+            }),2000)
+            return ()=>clearTimeout(timeout);
         }
-    }
-})
-)},2000)
-  },[changeText])
 
-function changeText(value,author){
-    return setMessageList( messageList.map(item=>{
-        if(author==='user') {
-            return {
-                text: value,
-                author: author
-            }
-        }
-    })
-    )
-}
+  },[messageList])
+
+const handlerSendText = useCallback((value)=>{
+        setMessageList(prevMessageList=>[...prevMessageList,value])
+    },[])
+
   return (
     <div className="App">
-     <header >
-      </header>
-        <main className="main-app">
-                <Form changeText={changeText}/>
-            {messageList.map((item)=>{
-               return (<div className="main-answer">
-                   {item.text} <br/>
-                   {item.author}
-            </div>)})}
+        <main className="main-app  bg-info">
+            <div className="row">
+            <div className="col d-flex flex-column g-2">
+            <MessageList messageList={messageList}/>
+                </div>
+            <div className="col d-flex flex-column-reverse align-items-end p-3">
+            <Form onSendMessage={handlerSendText}/>
+            </div>
+            <div className=" listChat col-4 opacity-75">
+                <ListChat/>
+            </div>
+            </div>
         </main>
+
     </div>
   );
 }
