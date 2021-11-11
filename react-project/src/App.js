@@ -1,52 +1,33 @@
-
+import React from "react";
+import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 import './App.css';
-import {useCallback, useEffect, useState} from "react";
-import {Form} from "./components/Form";
-import {MessageList} from "./components/MessageList";
-import {Authors} from "./utils/variable";
-import uuid from 'uuid/dist/v4';
-import {ListChat} from "./components/ListChat"
+import Chats from "./components/Chats";
+import {SelectChat} from "./components/SelectChat";
+import {Page404} from "./components/Page404";
+import {Home} from "./components/Home"
 
-const text=[
-    {id:uuid(),text:'', author:''}
-];
+
 
 function App() {
-    const [messageList,setMessageList]=useState(text);
-
-    useEffect(()=>{
-        if(messageList.length && messageList[messageList.length-1].author !== Authors.robot){
-          const timeout= setTimeout(()=> handlerSendText({
-                text:'How are you?',
-                author:Authors.robot,
-                id: uuid()
-            }),2000)
-            return ()=>clearTimeout(timeout);
-        }
-
-  },[messageList])
-
-const handlerSendText = useCallback((value)=>{
-        setMessageList(prevMessageList=>[...prevMessageList,value])
-    },[])
-
   return (
-    <div className="App">
-        <main className="main-app  bg-info">
-            <div className="row">
-            <div className="col d-flex flex-column g-2">
-            <MessageList messageList={messageList}/>
-                </div>
-            <div className="col d-flex flex-column-reverse align-items-end p-3">
-            <Form onSendMessage={handlerSendText}/>
-            </div>
-            <div className=" listChat col-4 opacity-75">
-                <ListChat/>
-            </div>
-            </div>
-        </main>
+    <BrowserRouter>
+        <div className="lead nav justify-content-center bg-black text-white bg-opacity-75">
+       <li className="nav-item"><Link className="nav-link text-white" to="/">Home</Link></li>
+            <li className="nav-item">
+                <Link className="nav-link text-white" to="/chats">Chats</Link>
+            </li>
+        <li className="nav-item"><Link className="nav-link text-white" to="/profile">Profile</Link></li>
+        </div>
 
-    </div>
+        <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/chats" >
+                <Route index element={<SelectChat/>} />
+                <Route path=":id" element={<Chats/>}/>
+            </Route>
+            <Route path="*" element={<Page404/>}/>
+        </Routes>
+    </BrowserRouter>
   );
 }
 
