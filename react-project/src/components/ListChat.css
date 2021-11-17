@@ -1,0 +1,21 @@
+.bg-dark{
+    background-image: var(--bs-gradient);
+    box-shadow: 0 4px 16px #ccc;
+    border-radius: 5px;
+    height: 100%;
+}
+.textName{
+    width: 78%;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    color: snow;
+}
+.formName{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 90%;
+    padding: 2px;
+    box-shadow: 0 4px 16px #ccc;
+    background-color: #696969;
+}
