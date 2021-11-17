@@ -8,11 +8,12 @@ import "./Chats.css"
 import {Navigate, useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addMessagesAction} from "../store/chats/actions";
+import {selectChats} from "../store/chats/selectors";
 
 function Chats() {
     const {id}=useParams();
     const navigate=useNavigate();
-    const messageList=useSelector((state)=>state.chats)
+    const messageList=useSelector(selectChats)
     const dispatch=useDispatch()
     useEffect(()=>{
         if(messageList[id]?.length && messageList[id]?.[messageList[id]?.length-1].author !== Authors.robot){

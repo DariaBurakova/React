@@ -5,9 +5,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {addListChatAction, deleteListChatAction} from "../store/listChat/actions";
 import uuid from "uuid/dist/v4";
 import {addMessagesAction, addMessagesListChatAction} from "../store/chats/actions";
+import {selectListChat} from "../store/listChat/selectors";
 
 export const ListChat=()=>{
-    const listChat=useSelector((state)=>state.listChats)
+    const listChat=useSelector(selectListChat)
     const [value, setValue] = useState("")
     const dispatch=useDispatch()
     const removeItem=useCallback((id)=>{
