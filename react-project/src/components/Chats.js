@@ -6,24 +6,14 @@ import {ListChat} from "./ListChat";
 import {useCallback, useEffect, useState} from "react";
 import "./Chats.css"
 import {Navigate, useNavigate, useParams} from "react-router-dom";
-
-const text={
-    chat1: [
-        {text: '1', author:Authors.user},
-    ],
-    chat2: [
-        {text: '2', author:Authors.user},
-    ],
-    chat3: [
-        {text: '3', author:Authors.user},
-    ]
-};
+import {useDispatch, useSelector} from "react-redux";
+import {addMessagesAction} from "../store/chats/actions";
 
 function Chats() {
     const {id}=useParams();
     const navigate=useNavigate();
-
-    const [messageList,setMessageList]=useState(text);
+    const messageList=useSelector((state)=>state.chats)
+    const dispatch=useDispatch()
     useEffect(()=>{
         if(messageList[id]?.length && messageList[id]?.[messageList[id]?.length-1].author !== Authors.robot){
             const timeout= setTimeout(()=> handlerSendText({
@@ -38,7 +28,8 @@ function Chats() {
 
 
     const handlerSendText = useCallback((value)=>{
-        setMessageList((prevMessageList)=>({...prevMessageList,[id]:[...prevMessageList[id],value]}));
+        //setMessageList((prevMessageList)=>({...prevMessageList,[id]:[...prevMessageList[id],value]}));
+        dispatch(addMessagesAction(value,id))
     },[id]);
 
     if(!messageList[id]){

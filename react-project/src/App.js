@@ -6,7 +6,7 @@ import Chats from "./components/Chats";
 import {SelectChat} from "./components/SelectChat";
 import {Page404} from "./components/Page404";
 import {Home} from "./components/Home"
-import {Profile} from "./components/Profile";
+import {ConnectedProfile, Profile} from "./components/Profile";
 import {store} from "./store";
 
 
@@ -28,7 +28,7 @@ function App() {
                 <Route index element={<SelectChat/>} />
                 <Route path=":id" element={<Chats/>}/>
             </Route>
-            <Route path="profile" element={<Profile/>}/>
+            <Route path="profile" element={<ConnectedProfile/>}/>
             <Route path="*" element={<Page404/>}/>
         </Routes>
     </BrowserRouter>

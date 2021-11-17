@@ -1,28 +1,32 @@
 import React, {useCallback, useState} from 'react';
 import './ListChat.css'
 import { NavLink} from "react-router-dom";
-const chats=[
-    {
-        id:"chat1",
-        name:'Chat № 1 '
-    },
-    {
-        id:"chat2",
-        name:'Chat № 2 '
-    },
-    {
-        id:"chat3",
-        name:'Chat № 3 '
-    }
-];
+import {useDispatch, useSelector} from "react-redux";
+import {addListChatAction, deleteListChatAction} from "../store/listChat/actions";
+import uuid from "uuid/dist/v4";
+import {addMessagesAction, addMessagesListChatAction} from "../store/chats/actions";
+
 export const ListChat=()=>{
-    const [listChat,setListChat]=useState(chats)
-    const removeItem=(id)=>{
-        setListChat(prevListChat=>prevListChat.filter(item => item.id !==id))
-    }
-
+    const listChat=useSelector((state)=>state.listChats)
+    const [value, setValue] = useState("")
+    const dispatch=useDispatch()
+    const removeItem=useCallback((id)=>{
+       dispatch(deleteListChatAction(id))
+   },[])
+const addChat=useCallback((name)=>{
+       const newId=uuid();
+       dispatch(addListChatAction({name,id: newId}))
+    dispatch(addMessagesListChatAction(newId))
+        console.log(newId)
+},[])
+const handlerSubmit=(e)=>{
+    e.preventDefault()
+    addChat(value)
+}
+const handlerChange=(event)=>{
+      setValue(event.target.value)
+}
   return(
-
       <div className=" container  bg-dark text-white ">
           <h3 className="text-center p-4 " >List Chat</h3>
           {listChat.map((item)=>(
@@ -32,9 +36,15 @@ export const ListChat=()=>{
                           <button className="btn btn-light border  opacity-100 rounded-end " onClick={()=>removeItem(item.id)}>&#215;</button>
                       </NavLink>
                   </span>
-              </div>
 
+              </div>
           ))}
+          <div className="d-flex justify-content-center align-items-end">
+          <form className="rounded formName" onSubmit={handlerSubmit} >
+          <input className="textName" type="text" value={value} onChange={handlerChange}/>
+              <button className="btn btn-light border  opacity-100 rounded-end" >&#10798;</button>
+          </form>
+          </div>
 
       </div>)
 }

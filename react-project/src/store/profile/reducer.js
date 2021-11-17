@@ -3,6 +3,7 @@
 const profileState={
     checkbox:false,
      name:'Сlick on me',
+
  }
 
 export const profileReducer=(state=profileState,action)=>{
@@ -10,7 +11,7 @@ export const profileReducer=(state=profileState,action)=>{
         case CHECKBOX_ACTION:
             return{
                 ...state,
-                checkbox: !state.checkbox
+              checkbox:!state.checkbox
             }
         default:
             return state
