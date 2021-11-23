@@ -1,0 +1,14 @@
+.main-answer{
+    box-shadow: 0 4px 16px #ccc;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    background-color: snow;
+}
+.answerMessage{
+    width: 170px;
+}
+.contentMessage{
+    display: flex;
+    justify-content: center;
+    margin: 0px auto;
+}
