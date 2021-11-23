@@ -1,21 +1,21 @@
 import uuid from "uuid/dist/v4";
-import {Authors} from "../utils/variable";
-import {MessageList} from "./MessageList";
-import {Form} from "./Form";
-import {ListChat} from "./ListChat";
+import {Authors} from "../../utils/variable";
+import {MessageList} from "../Message/MessageList";
+import {Form} from "../Form/Form";
+import {ListChat} from "../ListChat/ListChat";
 import {useCallback, useEffect, useState} from "react";
 import "./Chats.css"
 import {Navigate, useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessagesAction} from "../store/chats/actions";
-import {selectChats} from "../store/chats/selectors";
+import {addMessagesAction, addMessageWithThunk} from "../../store/chats/actions";
+import {selectChats} from "../../store/chats/selectors";
 
 function Chats() {
     const {id}=useParams();
     const navigate=useNavigate();
     const messageList=useSelector(selectChats)
     const dispatch=useDispatch()
-    useEffect(()=>{
+   /* useEffect(()=>{
         if(messageList[id]?.length && messageList[id]?.[messageList[id]?.length-1].author !== Authors.robot){
             const timeout= setTimeout(()=> handlerSendText({
                 text:'How are you?',
@@ -25,13 +25,12 @@ function Chats() {
             return ()=>clearTimeout(timeout);
         }
 
-    },[messageList])
+    },[messageList])*/
 
-
-    const handlerSendText = useCallback((value)=>{
+    const handlerSendText =useCallback((messageList)=>{
         //setMessageList((prevMessageList)=>({...prevMessageList,[id]:[...prevMessageList[id],value]}));
-        dispatch(addMessagesAction(value,id))
-    },[id]);
+        dispatch(addMessageWithThunk(id,messageList))
+    },[messageList,id]);
 
     if(!messageList[id]){
         return (

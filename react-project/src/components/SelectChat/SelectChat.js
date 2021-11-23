@@ -1,5 +1,5 @@
 import React from "react";
-import {ListChat} from "./ListChat";
+import {ListChat} from "../ListChat/ListChat";
 import "./SelectChat.css"
 
 export const SelectChat=()=>{

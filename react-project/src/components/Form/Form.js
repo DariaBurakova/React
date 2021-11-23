@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Form.css';
-import {Authors} from "../utils/variable";
+import {Authors} from "../../utils/variable";
 import uuid from 'uuid/dist/v4';
 
 export function Form(props){

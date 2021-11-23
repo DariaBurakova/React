@@ -2,10 +2,10 @@ import React, {useCallback, useState} from 'react';
 import './ListChat.css'
 import { NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addListChatAction, deleteListChatAction} from "../store/listChat/actions";
+import {addListChatAction, deleteListChatAction} from "../../store/listChat/actions";
 import uuid from "uuid/dist/v4";
-import {addMessagesAction, addMessagesListChatAction} from "../store/chats/actions";
-import {selectListChat} from "../store/listChat/selectors";
+import { addMessagesListChatAction} from "../../store/chats/actions";
+import {selectListChat} from "../../store/listChat/selectors";
 
 export const ListChat=()=>{
     const listChat=useSelector(selectListChat)
@@ -18,6 +18,7 @@ const addChat=useCallback((name)=>{
        const newId=uuid();
        dispatch(addListChatAction({name,id: newId}))
     dispatch(addMessagesListChatAction(newId))
+
         console.log(newId)
 },[])
 const handlerSubmit=(e)=>{
