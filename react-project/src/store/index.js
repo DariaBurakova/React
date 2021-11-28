@@ -5,6 +5,7 @@
  import thunk from "redux-thunk";
  import  storage from 'redux-persist/lib/storage'
  import { persistStore,persistReducer } from 'redux-persist';
+ import {loadingArticles} from "./loading/reducer";
 
  const composeEnhancers= window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,6 +17,7 @@
          profile:profileReducer,
          listChats:listChatReducer,
          chats:chatsStateReducer,
+     loading:loadingArticles,
      })
  const persistedReducer=persistReducer(persistConfig,rootReducer)
 

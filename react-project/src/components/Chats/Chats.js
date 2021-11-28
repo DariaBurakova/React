@@ -15,20 +15,7 @@ function Chats() {
     const navigate=useNavigate();
     const messageList=useSelector(selectChats)
     const dispatch=useDispatch()
-   /* useEffect(()=>{
-        if(messageList[id]?.length && messageList[id]?.[messageList[id]?.length-1].author !== Authors.robot){
-            const timeout= setTimeout(()=> handlerSendText({
-                text:'How are you?',
-                author:Authors.robot,
-                id: uuid()
-            }),2000)
-            return ()=>clearTimeout(timeout);
-        }
-
-    },[messageList])*/
-
     const handlerSendText =useCallback((messageList)=>{
-        //setMessageList((prevMessageList)=>({...prevMessageList,[id]:[...prevMessageList[id],value]}));
         dispatch(addMessageWithThunk(id,messageList))
     },[messageList,id]);
 

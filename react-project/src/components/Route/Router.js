@@ -6,6 +6,7 @@ import {ConnectedProfile} from "../Profile";
 import {Page404} from "../Page404";
 import React from "react";
 import "./router.css"
+import {Loading} from "../Loading/Loading";
 
 export const Router=()=>{
     return(
@@ -16,6 +17,7 @@ export const Router=()=>{
                     <Link className="nav-link text-white" to="/chats">Chats</Link>
                 </li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/profile">Profile</Link></li>
+                <li className="nav-item"><Link className="nav-link text-white" to="/loading">Loading</Link></li>
             </div>
 
             <Routes>
@@ -25,6 +27,7 @@ export const Router=()=>{
                     <Route path=":id" element={<Chats/>}/>
                 </Route>
                 <Route path="profile" element={<ConnectedProfile/>}/>
+                <Route path="loading" element={<Loading/>}/>
                 <Route path="*" element={<Page404/>}/>
             </Routes>
         </BrowserRouter>
