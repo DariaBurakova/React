@@ -1,4 +1,4 @@
-import {ADD_LISTCHAT_ACTION, DELETE_LISTCHAT_ACTION} from "./actions";
+import {ADD_LISTCHAT_ACTION, DELETE_LISTCHAT_ACTION, SET_CHATS_ACTION} from "./actions";
 
 const listChatState=[
     {
@@ -21,6 +21,8 @@ export const listChatReducer=(state=listChatState,{type,payload})=>{
          return [...state,payload];
      case DELETE_LISTCHAT_ACTION:
          return state.filter(({id}) => id !==payload);
+     case SET_CHATS_ACTION:
+        return payload
     default:
     return state;
  }

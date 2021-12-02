@@ -1,5 +1,4 @@
-import uuid from "uuid/dist/v4";
-import {Authors} from "../../utils/variable";
+
 import {MessageList} from "../Message/MessageList";
 import {Form} from "../Form/Form";
 import {ListChat} from "../ListChat/ListChat";
@@ -7,16 +6,18 @@ import {useCallback, useEffect, useState} from "react";
 import "./Chats.css"
 import {Navigate, useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessagesAction, addMessageWithThunk} from "../../store/chats/actions";
+import { addMessageThunk} from "../../store/chats/actions";
 import {selectChats} from "../../store/chats/selectors";
+
 
 function Chats() {
     const {id}=useParams();
     const navigate=useNavigate();
     const messageList=useSelector(selectChats)
     const dispatch=useDispatch()
+
     const handlerSendText =useCallback((messageList)=>{
-        dispatch(addMessageWithThunk(id,messageList))
+        dispatch(addMessageThunk(id,messageList))
     },[messageList,id]);
 
     if(!messageList[id]){

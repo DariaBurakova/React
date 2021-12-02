@@ -1,25 +1,30 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './ListChat.css'
 import { NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addListChatAction, deleteListChatAction} from "../../store/listChat/actions";
+import {addChatsThunk,initChatsThunk} from "../../store/listChat/actions";
 import uuid from "uuid/dist/v4";
-import { addMessagesListChatAction} from "../../store/chats/actions";
 import {selectListChat} from "../../store/listChat/selectors";
+import {deletChatsThunk} from "../../store/listChat/actions";
 
 export const ListChat=()=>{
     const listChat=useSelector(selectListChat)
     const [value, setValue] = useState("")
     const dispatch=useDispatch()
+    useEffect(()=>{
+        dispatch(initChatsThunk())
+
+    },[])
     const removeItem=useCallback((id)=>{
-       dispatch(deleteListChatAction(id))
+        dispatch(deletChatsThunk(id))
+
    },[])
 const addChat=useCallback((name)=>{
        const newId=uuid();
-       dispatch(addListChatAction({name,id: newId}))
-    dispatch(addMessagesListChatAction(newId))
+       dispatch(addChatsThunk({name,id: newId}))
 
-        console.log(newId)
+    setValue('')
+
 },[])
 const handlerSubmit=(e)=>{
     e.preventDefault()

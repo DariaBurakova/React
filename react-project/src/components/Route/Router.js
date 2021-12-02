@@ -4,11 +4,34 @@ import {SelectChat} from "../SelectChat/SelectChat";
 import Chats from "../Chats/Chats";
 import {ConnectedProfile} from "../Profile";
 import {Page404} from "../Page404";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./router.css"
 import {Loading} from "../Loading/Loading";
+import {PublicRouter} from "../PublicRouter/publicRouter";
+import {PrivateRouter} from "../PrivateRouter/privateRouter";
+import {SignUp} from "../SignUp/signup";
+import {auth} from "../../services/firebase";
+import {useDispatch} from "react-redux";
+import {signInAction, signOutAction} from "../../store/profile/actions";
 
-export const Router=()=>{
+import {initMessageThunk} from "../../store/chats/actions";
+
+
+export const Router=()=> {
+    const dispatch=useDispatch()
+    useEffect(()=>{
+    const unsubscribe= auth.onAuthStateChanged((user)=>{
+if(user){
+    dispatch(signInAction())
+}else{
+    dispatch(signOutAction())
+}
+        })
+        return unsubscribe
+    },[])
+   useEffect(()=>{
+        dispatch(initMessageThunk())
+    },[])
     return(
         <BrowserRouter>
             <div className="lead nav justify-content-center bg-black text-white bg-opacity-75">
@@ -21,12 +44,13 @@ export const Router=()=>{
             </div>
 
             <Routes>
-                <Route path="/" element={<Home/>}/>
+                <Route path="/" element={<PublicRouter><Home/></PublicRouter>}/>
                 <Route path="chats" >
-                    <Route index element={<SelectChat/>} />
-                    <Route path=":id" element={<Chats/>}/>
+                    <Route index element={<PrivateRouter><SelectChat/></PrivateRouter>} />
+                    <Route path=":id" element={<PrivateRouter><Chats/></PrivateRouter>}/>
                 </Route>
-                <Route path="profile" element={<ConnectedProfile/>}/>
+                <Route path="/signUp" element={<PublicRouter><SignUp/></PublicRouter>}/>
+                <Route path="profile" element={<PrivateRouter><ConnectedProfile/></PrivateRouter>}/>
                 <Route path="loading" element={<Loading/>}/>
                 <Route path="*" element={<Page404/>}/>
             </Routes>

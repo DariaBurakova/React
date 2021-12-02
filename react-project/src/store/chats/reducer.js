@@ -1,5 +1,5 @@
 import {Authors} from "../../utils/variable";
-import {ADD_MESSAGES_ACTION, ADD_MESSAGES_LISTCHAT_ACTION} from "./actions";
+import {ADD_MESSAGES_ACTION, ADD_MESSAGES_LISTCHAT_ACTION, SET_MESSAGES_ACTION} from "./actions";
 
 
 const chatsState={
@@ -20,6 +20,8 @@ export const chatsStateReducer=(state=chatsState,{type,payload,idChats,})=>{
             return {...state,[payload.id]:[...state[payload.id],payload.messageList]}
         case ADD_MESSAGES_LISTCHAT_ACTION:
             return {...state,[idChats]:[]}
+        case SET_MESSAGES_ACTION:
+            return payload
         default:
             return state;
     }
