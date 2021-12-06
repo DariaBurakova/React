@@ -13,5 +13,5 @@ export const MessageList=({messageList})=> {
                     </div>
                         ))}
             </div>
-            );
+            )
 };

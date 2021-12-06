@@ -1,6 +1,6 @@
  import {CHANGE_NAME_ACTION, CHECKBOX_ACTION, SIGN_IN_ACTION, SIGN_OUT_ACTION} from "./actions"
 
-const profileState={
+export const profileState={
     checkbox:false,
      name:'Default name',
     authed:false,
